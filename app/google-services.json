@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "421332155432",
+    "project_id": "fcmapp-2050c",
+    "storage_bucket": "fcmapp-2050c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421332155432:android:4e122a0b5c5c5fdb8c891d",
+        "android_client_info": {
+          "package_name": "com.abhicoding.resoluteai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAcp_JaSQcnPO5HQLMZU5whIuB-RxY9nk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421332155432:android:2f4678e6761205df8c891d",
+        "android_client_info": {
+          "package_name": "com.example.fcmapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAcp_JaSQcnPO5HQLMZU5whIuB-RxY9nk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
