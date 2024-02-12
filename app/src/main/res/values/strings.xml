@@ -2,4 +2,7 @@
     <string name="app_name">ResoluteAI</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_chats">ChatsActivity</string>
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="title_activity_user_chat">UserChatActivity</string>
 </resources>

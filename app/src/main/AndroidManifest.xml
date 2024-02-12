@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +17,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ResoluteAI"
         tools:targetApi="31">
+        <activity
+            android:name=".chat.screens.chats.UserChatActivity"
+            android:exported="false"
+            android:label="@string/title_activity_user_chat"
+            android:theme="@style/Theme.ResoluteAI" />
+        <activity
+            android:name=".chat.screens.groups.MessageActivity"
+            android:exported="false"
+            android:label="@string/title_activity_message"
+            android:theme="@style/Theme.ResoluteAI" />
+        <activity
+            android:name=".chat.ChatsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_chats"
+            android:theme="@style/Theme.ResoluteAI" />
         <activity
             android:name=".user.UserActivity"
             android:exported="false"

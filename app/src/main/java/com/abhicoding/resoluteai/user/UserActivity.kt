@@ -38,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
+import com.abhicoding.resoluteai.chat.ChatsActivity
 import com.abhicoding.resoluteai.login.MainActivity
 import com.abhicoding.resoluteai.login.auth
 import com.abhicoding.resoluteai.signup.User
@@ -144,12 +145,6 @@ class UserActivity : ComponentActivity() {
                         }
                     }
 
-
-                    Toast.makeText(
-                        this@UserActivity,
-                        "User Location: $location",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     Log.d("location", "User Location : $location")
                     reference.child(path).addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
@@ -235,6 +230,18 @@ class UserActivity : ComponentActivity() {
 
                         }
                         Spacer(modifier = Modifier.height(30.dp))
+
+                        Button(onClick = {
+                           val intent = Intent(this@UserActivity, ChatsActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        },
+                            colors = ButtonDefaults.textButtonColors(Color.Green)
+                        ) {
+                            Text(text = "Go to ChatsActivity ",
+                               fontWeight = FontWeight.Bold,
+                                color = Color.Black)
+                        }
                         Row(
                             verticalAlignment = Alignment.Top,
                             horizontalArrangement = Arrangement.End
@@ -270,6 +277,7 @@ class UserActivity : ComponentActivity() {
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             100
         )
+
     }
 }
 

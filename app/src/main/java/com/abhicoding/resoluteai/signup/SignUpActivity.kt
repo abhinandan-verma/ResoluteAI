@@ -15,9 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.database.database
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,7 +24,7 @@ val database = Firebase.database
 val reference = database.getReference("Users")
 class SignUpActivity : ComponentActivity() {
 
-    val auth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +40,8 @@ class SignUpActivity : ComponentActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            reload(currentUser)
+          //  updateUI(currentUser)
+          reload(currentUser)
         }
     }
 
@@ -106,6 +105,7 @@ fun signUpUser(name: String, email: String, password: String, context: Context) 
     fun updateUI(user: FirebaseUser?, context: Context) {
         Log.d("tag","Updating... for ${user.toString()}")
         Toast.makeText(context,"Updating for ${user.toString()}",Toast.LENGTH_SHORT).show()
+
     }
 
 
