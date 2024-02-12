@@ -5,7 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
@@ -15,10 +15,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.abhicoding.resoluteai.R
 import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
@@ -26,7 +24,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 
 
 @Composable
-fun Progress() {
+fun Progress(modifier: Modifier = Modifier) {
     val progress = remember {
         Animatable(0f)
     }
@@ -35,60 +33,25 @@ fun Progress() {
         progress.animateTo(1f, animationSpec = tween(durationMillis = 1000))
     }
 
-    Box() {
+    Box(modifier = modifier) {
         val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.lottie))
 
         val progressState = animateLottieCompositionAsState(
             composition = composition,
             iterations = LottieConstants.IterateForever,
             isPlaying = true,
-            speed = 4.5f,
+            speed = 3f,
             reverseOnRepeat = true,
             restartOnPlay = true,
-            clipSpec = LottieClipSpec.Progress(0f, 1f),
-
         )
         LottieAnimation(
             composition = composition,
             progress = progressState.progress,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .wrapContentSize()
                 .align(Alignment.Center)
         )
 
-    }
-}
-
-@Composable
-fun LottieButton(onClick : () -> Unit){
-    val progress = remember {
-        Animatable(0f)
-    }
-
-    LaunchedEffect(Unit) {
-        progress.animateTo(1f, animationSpec = tween(durationMillis = 1000))
-    }
-    Box(
-        modifier = Modifier.fillMaxSize(1f)
-            .size(70.dp),
-    ) {
-        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.lottiebtn))
-
-        val progressState = animateLottieCompositionAsState(
-            composition = composition,
-            iterations = LottieConstants.IterateForever,
-            isPlaying = true,
-            speed = 2.0f,
-            reverseOnRepeat = true,
-            restartOnPlay = true,
-            clipSpec = LottieClipSpec.Progress(0f, 1f),
-
-            )
-        LottieAnimation(
-            composition = composition,
-            progress = progressState.progress,
-            modifier = Modifier.fillMaxSize(1f)
-
-        )
     }
 }
 
@@ -115,24 +78,95 @@ fun LottieButton2(
         ),
         contentPadding = PaddingValues()
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
+
             val progressState = animateLottieCompositionAsState(
                 composition = composition,
                 iterations = LottieConstants.IterateForever,
                 isPlaying = true,
                 speed = 2f,
                 reverseOnRepeat = true,
-                restartOnPlay = true,
-                clipSpec = LottieClipSpec.Progress(0f, 1f),
+                restartOnPlay = true
             )
             LottieAnimation(
                 composition = composition,
                 progress = progressState.progress,
-                modifier = Modifier.align(Alignment.Center).fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Alignment.CenterVertically)
+
             )
         }
     }
+
+
+@Composable
+fun ChatsAppProgress(modifier: Modifier = Modifier) {
+
+    val progress = remember {
+        Animatable(0f)
+    }
+
+    LaunchedEffect(Unit) {
+        progress.animateTo(1f, animationSpec = tween(durationMillis = 1000))
+    }
+
+    Box(
+        modifier = modifier
+    ) {
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.chatsapp))
+
+        val progressState = animateLottieCompositionAsState(
+            composition = composition,
+            iterations = LottieConstants.IterateForever,
+            isPlaying = true,
+            speed = 2f,
+            reverseOnRepeat = true,
+            restartOnPlay = true,
+            )
+        LottieAnimation(
+            composition = composition,
+            progress = progressState.progress,
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.Center)
+        )
+
+    }
 }
+
+@Composable
+fun Otp(modifier: Modifier = Modifier) {
+    val progress = remember {
+        Animatable(0f)
+    }
+
+    LaunchedEffect(Unit) {
+        progress.animateTo(1f, animationSpec = tween(durationMillis = 1000))
+    }
+
+    Box(
+        modifier = modifier
+    ) {
+        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.otp))
+
+        val progressState = animateLottieCompositionAsState(
+            composition = composition,
+            iterations = LottieConstants.IterateForever,
+            isPlaying = true,
+            speed = 2f,
+            reverseOnRepeat = true,
+            restartOnPlay = true,
+        )
+        LottieAnimation(
+            composition = composition,
+            progress = progressState.progress,
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.Center)
+        )
+
+    }
+}
+
+
+

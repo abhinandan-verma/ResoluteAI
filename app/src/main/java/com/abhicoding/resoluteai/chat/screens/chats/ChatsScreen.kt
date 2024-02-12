@@ -11,12 +11,13 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.twotone.Person
+import androidx.compose.material.icons.twotone.AccountCircle
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -55,25 +56,30 @@ fun ChatsScreen() {
                 onClick = {
                     context.startActivity(Intent(context, SignUpActivity::class.java))
                 },
-                containerColor = Color.Magenta,
+                containerColor = Color.Blue,
                 contentColor = Color.Black) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add Group",
-                    Modifier.size(30.dp)
+                    Modifier.size(30.dp),
+                    tint = Color.White
                 )
             }
         }
     ){innerPadding ->
         Column (
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
         ){
+            Spacer(modifier = Modifier.width(10.dp))
+
             Text(text = "Explore Other Users",
                 fontWeight = FontWeight.Bold,
-                color = Color.Yellow,
+                color = Color.White,
                 fontSize = 28.sp,
                 textAlign = TextAlign.Center
             )
+            Spacer(modifier = Modifier.width(10.dp))
 
             SetUserData(viewModel = viewModel)
         }
@@ -154,17 +160,17 @@ fun ShowLazyList(usersList: MutableList<User>) {
                     Modifier
                         .background(
                             Brush.linearGradient(
-                                listOf(Color.Yellow, Color.Green, Color.Cyan)
+                                listOf(Color.Cyan, Color.White)
                             )
                         )
-                        .padding(16.dp)
+                        .padding(10.dp)
                 ) {
                     Image(
-                        imageVector = Icons.TwoTone.Person,
+                        imageVector = Icons.TwoTone.AccountCircle,
                         colorFilter = ColorFilter.tint(Color.Black),
                         alignment = Alignment.TopStart,
                         contentDescription = "Group",
-                        modifier = Modifier.size(40.dp)
+                        modifier = Modifier.size(50.dp)
 
                     )
                     Spacer(modifier = Modifier.padding(3.dp))

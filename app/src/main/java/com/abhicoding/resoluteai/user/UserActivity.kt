@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -43,6 +44,8 @@ import com.abhicoding.resoluteai.login.MainActivity
 import com.abhicoding.resoluteai.login.auth
 import com.abhicoding.resoluteai.signup.User
 import com.abhicoding.resoluteai.ui.theme.ResoluteAITheme
+import com.abhicoding.resoluteai.util.ChatsAppProgress
+import com.abhicoding.resoluteai.util.Progress
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.Firebase
@@ -141,7 +144,7 @@ class UserActivity : ComponentActivity() {
                             }
 
                         } else {
-                            location = "Returned null Location"
+                            location = "Location Access Not Granted"
                         }
                     }
 
@@ -175,25 +178,41 @@ class UserActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
+                        ChatsAppProgress(modifier = Modifier.size(80.dp))
+                        Spacer(modifier = Modifier.height(10.dp))
 
                         Text(
                             text = "<--- Profile Page --->",
                             textAlign = TextAlign.Center,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 25.sp
+                            fontSize = 25.sp,
+                            modifier = Modifier
+                                .padding(5.dp)
+                                .fillMaxWidth()
                         )
                         Spacer(modifier = Modifier.height(30.dp))
-                        Text(
-                            text = "Hello $name",
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 35.sp
-                        )
+
+                        Row {
+                            Text(
+                                text = "Hello $name",
+                                textAlign = TextAlign.Center,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 35.sp,
+                                modifier = Modifier
+                                    .padding(5.dp)
+                            )
+
+                            Progress(
+                                modifier = Modifier.size(65.dp)
+                                    .padding(bottom = 10.dp)
+                            )
+                        }
+
 
                         Box(
                             modifier = Modifier
-                                .border(3.dp, Color.Green, shape = RoundedCornerShape(10.dp))
-                                .padding(5.dp)
+                                .border(5.dp, Color.Green, shape = RoundedCornerShape(10.dp))
+                                .padding(8.dp)
                         ) {
                             Column(
                                 modifier = Modifier
@@ -231,19 +250,29 @@ class UserActivity : ComponentActivity() {
                         }
                         Spacer(modifier = Modifier.height(30.dp))
 
-                        Button(onClick = {
-                           val intent = Intent(this@UserActivity, ChatsActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        },
-                            colors = ButtonDefaults.textButtonColors(Color.Green)
-                        ) {
-                            Text(text = "Go to ChatsActivity ",
-                               fontWeight = FontWeight.Bold,
-                                color = Color.Black)
-                        }
+
+                            Button(
+                                onClick = {
+                                    val intent =
+                                        Intent(this@UserActivity, ChatsActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                },
+                                colors = ButtonDefaults.textButtonColors(Color.Green),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+
+                            ) {
+                                Text(
+                                    text = "Go to ChatsActivity ",
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Black
+                                )
+
+                            }
+
                         Row(
-                            verticalAlignment = Alignment.Top,
+                            verticalAlignment = Alignment.Bottom,
                             horizontalArrangement = Arrangement.End
                         ) {
 
@@ -259,7 +288,11 @@ class UserActivity : ComponentActivity() {
                                 startActivity(newIntent)
                                 finish()
                             },
-                                colors = ButtonDefaults.textButtonColors(Color.Magenta)) {
+                                colors = ButtonDefaults.textButtonColors(Color.Magenta),
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .fillMaxWidth()
+                            ) {
                                 Text(text = "Sign Out",
                                     color = Color.White)
                             }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.abhicoding.resoluteai.DataState
 import com.abhicoding.resoluteai.chat.Message
+import com.abhicoding.resoluteai.util.formatTime
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -55,7 +56,7 @@ fun sendGroupMessage(messageText: String, groupName: String, sender: String){
         val msg = Message(
             message = messageText,
             senderId = sender,
-            time = System.currentTimeMillis().toString()
+            time = formatTime()
         )
 
         val randomKey : String? = reference.push().key

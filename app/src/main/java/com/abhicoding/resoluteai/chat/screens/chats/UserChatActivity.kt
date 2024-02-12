@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,10 +16,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,6 +32,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -69,40 +75,63 @@ class UserChatActivity : ComponentActivity() {
                     topBar = {
                         TopAppBar(
                             title = {
-                                Column {
-                                    Text(
-                                        text = currentUserEmail,
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 20.sp
+                                Row(
+                                    modifier = Modifier
+
+                                ) {
+                                    Image(
+                                        imageVector = Icons.Default.Person,
+                                        contentDescription = "Group Icon",
+                                        modifier = Modifier
+                                            .size(60.dp)
+                                            .wrapContentSize()
+                                            .border(shape = CircleShape, width = 2.dp, color = Color.Magenta)
+                                            .padding(7.dp)
                                     )
-                                    Spacer(modifier = Modifier.height(2.dp))
-                                    Text(
-                                        text = nextUserEmail,
-                                        fontSize = 12.sp
-                                    )
+
+                                    Spacer(modifier = Modifier.width(10.dp))
+                                    Column {
+                                        Text(
+                                            text = nextUserEmail,
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 20.sp
+                                        )
+                                        Spacer(modifier = Modifier.height(2.dp))
+                                        Text(
+                                            text = currentUserEmail,
+                                            fontSize = 12.sp
+                                        )
+                                    }
                                 }
-                            }
+                            },
+                            colors = TopAppBarDefaults.topAppBarColors( Color.Magenta )
                         )
                     },
                     bottomBar = {
                         BottomAppBar(
                             containerColor = Color.Transparent,
                             contentColor = Color.Black,
-                        ){
-                            OutlinedTextField(
-                                value = message,
-                                onValueChange = {
-                                    message = it
-                                },
-                                label = {
-                                    Text(text = "Start Chatting...")
-                                },
-                                modifier = Modifier.fillMaxWidth(.75F),
-                                shape = RoundedCornerShape(35.dp)
-                            )
-//
-                            LottieButton2(modifier = Modifier.size(150.dp)){
-                                sendMessage(message, currentUserEmail, nextUserEmail)
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy((-25).dp)
+                            ) {
+                                OutlinedTextField(
+                                    value = message,
+                                    onValueChange = {
+                                        message = it
+                                    },
+                                    label = {
+                                        Text(text = "Start Chatting...")
+                                    },
+                                    modifier = Modifier.fillMaxWidth(.76f),
+                                    shape = RoundedCornerShape(35.dp)
+                                )
+                                LottieButton2(
+                                    modifier = Modifier.size(150.dp)
+                                ) {
+                                    sendMessage(message, currentUserEmail, nextUserEmail)
+                                    message = ""
+                                }
                             }
                         }
                     }
@@ -173,55 +202,39 @@ fun ShowMessagesList(messagesList: MutableList<Message>) {
     LazyColumn {
         items(messagesList) {message ->
 
-            Row (
-               horizontalArrangement =
-                   if (message.senderId == currentUserEmail) Arrangement.Start
+            Card(
+                modifier = Modifier
+                    .padding(5.dp)
+                    .wrapContentSize()
+                ,
+                shape = RoundedCornerShape(15.dp),
+                colors =
+                if (message.senderId == currentUserEmail)
+                    CardDefaults.cardColors(Color.Magenta)
                 else
-                    Arrangement.Absolute.Left
-            ){
-
-                Card(
-                    modifier = Modifier
-                        .padding(2.dp)
-                        .wrapContentSize(),
-                    shape = RoundedCornerShape(15.dp),
-                    colors =
-                    if(message.senderId == currentUserEmail)
-                        CardDefaults.cardColors(Color.Magenta)
-                    else
-                        CardDefaults.cardColors(Color.Gray)
-                    ) {
-                    Row(
-                        Modifier
-                            .background(
-                                if (message.senderId == currentUserEmail)
-                                    Color.Magenta
-                                else
-                                    Color.White
-                            )
-
-                            .padding(4.dp)
-                    ) {
-
-                        Column{
-                            Text(
-                                text = message.message!!,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black,
-                                fontSize = 20.sp,
-                                modifier = Modifier.align(Alignment.CenterHorizontally)
-                            )
-                            Text(
-                                text = message.time.toString(),
-                                fontSize = 10.sp,
-                                color = Color.Black,
-                                modifier = Modifier.align(Alignment.End)
-                            )
-                        }
-                    }
+                    CardDefaults.cardColors(Color.White)
+            ) {
+                Column (
+                    verticalArrangement = Arrangement.spacedBy((-12).dp),
+                ){
+                    Text(
+                        text = message.message!!,
+                        color = if (currentUserEmail == message.senderId) Color.White else Color.Black,
+                        fontSize = 14.sp,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(end = 2.dp, start = 2.dp)
+                    )
+                    Text(
+                        text = message.time.toString(),
+                        fontSize = 9.sp,
+                        color =  if (currentUserEmail == message.senderId) Color.White else Color.Black,
+                        modifier = Modifier.align(Alignment.End)
+                    )
                 }
             }
         }
     }
 }
+
 

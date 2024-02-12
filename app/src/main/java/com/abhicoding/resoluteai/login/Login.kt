@@ -3,6 +3,7 @@ package com.abhicoding.resoluteai.login
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,12 +12,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,6 +44,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abhicoding.resoluteai.signup.SignUpActivity
+import com.abhicoding.resoluteai.util.ChatsAppProgress
+import com.abhicoding.resoluteai.util.Otp
 import com.abhicoding.resoluteai.util.Progress
 import kotlinx.coroutines.delay
 
@@ -77,6 +88,9 @@ fun Login() {
             var password by remember {
                 mutableStateOf("")
             }
+            var otpProgress by remember {
+                mutableStateOf(false)
+            }
 
             LaunchedEffect(key1 = true){
                 while (true){
@@ -87,19 +101,34 @@ fun Login() {
 
             if(progress){
                 Row {
-//                    EmojiProgressBar(progress = progressVal.toFloat())
-//                    SmilingEmojiProgressBar(progress = progressVal.toFloat())
-
                     Progress()
                 }
             }
+            if (otpProgress){
+                Otp(
+                    modifier = Modifier.size(60.dp)
+                )
+            }
 
-
-            Spacer(modifier = Modifier.height(20.dp))
+            Text(text = "Welcome to MadRocket",
+                fontWeight = FontWeight.Bold,
+                fontSize = 25.sp,
+                color = Color.Magenta,
+                modifier = Modifier.padding(bottom = 10.dp)
+            )
+            
+            Spacer(modifier = Modifier.height(1.dp))
+            
+            ChatsAppProgress(modifier = Modifier.size(40.dp))
+            
+            Spacer(modifier = Modifier.height(2.dp))
 
             Card {
                 Column(
                     modifier = Modifier
+                        .background(
+                            Color.Black
+                        )
                         .padding(16.dp)
                         .fillMaxWidth(1f)
                         .wrapContentHeight(),
@@ -118,7 +147,15 @@ fun Login() {
                                 username = it
                             }
                         },
-                        label = { Text("Username") }
+                        label = { Text("Username") },
+                        colors = OutlinedTextFieldDefaults.colors(Color.White),
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Person,
+                                contentDescription = "Phone",
+                                tint = Color.White
+                            )
+                        }
                     )
                     OutlinedTextField(
                         value = phoneNumber,
@@ -128,19 +165,35 @@ fun Login() {
                             }
                         },
                         label = { Text("Phone Number") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                        colors = OutlinedTextFieldDefaults.colors(Color.White),
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Call,
+                                contentDescription = "Phone",
+                                tint = Color.White
+                            )
+                        }
                     )
                     if (isOtpVisible) {
-                        OutlinedTextField(
-                            value = otp,
-                            onValueChange = { otp = it },
-                           label = { Text(text = "Enter OTP") },
-                            modifier = Modifier
-                                .fillMaxWidth(1f)
-                                .padding(top = 8.dp),
-                            singleLine = true,
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
-                        )
+
+                        otpProgress = true
+
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            OutlinedTextField(
+                                value = otp,
+                                onValueChange = { otp = it },
+                                label = { Text(text = "Enter OTP") },
+                                modifier = Modifier
+                                    .fillMaxWidth(1f)
+                                    .padding(top = 8.dp),
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(Color.White),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                            )
+                        }
                     }
                     if (!isOtpVisible) {
                         Button(
@@ -158,13 +211,11 @@ fun Login() {
                                 .fillMaxWidth(1f)
                                 .padding(top = 8.dp)
                         ) {
-                            Text(text = "Sent OTP", color = Color.Blue)
-
+                            Text(text = "Send OTP", color = Color.Black)
                         }
                     } else {
                         Button(
                             onClick = {
-                                progress = true
                                 verifyPhoneNumberWithCode(
                                     context,
                                     storedVerificationId,
@@ -172,25 +223,31 @@ fun Login() {
                                     username,
                                     phoneNumber
                                 )
+                                otpProgress = false
+                                progress = true
                             },
                             colors = ButtonDefaults.textButtonColors(Color.Cyan),
                             modifier = Modifier
                                 .fillMaxWidth(1f)
                                 .padding(8.dp)
                         ) {
-                            Text(text = "Verify", color = Color.Black)
+                            Text(text = "Verify OTP", color = Color.Black)
                         }
                     }
                 }
 
             }
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(20.dp))
             Card {
                 Column(
                     modifier = Modifier
+                        .background(
+                            Color.Black
+                        )
                         .padding(16.dp)
                         .fillMaxWidth(1f)
-                        .wrapContentHeight(),
+                        .wrapContentHeight()
+                        ,
                     verticalArrangement = Arrangement.SpaceEvenly,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
@@ -204,14 +261,30 @@ fun Login() {
                         value = email,
                         onValueChange = { email = it },
                         label = { Text(text = "Enter Email") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        colors = OutlinedTextFieldDefaults.colors(Color.White),
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Email,
+                                contentDescription = "Email",
+                                tint = Color.White
+                            )
+                        }
                     )
 
                     OutlinedTextField(
                         value = password,
                         onValueChange = { password = it },
                         label = { Text(text = "Enter Password") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        colors = OutlinedTextFieldDefaults.colors(Color.White),
+                        leadingIcon = {
+                            Icon(
+                                Icons.Default.Lock,
+                                contentDescription = "Password",
+                                tint = Color.White
+                            )
+                        }
                     )
                     Button(
                         onClick = {
@@ -250,8 +323,6 @@ fun Login() {
                             color = Color.White
                         )
                     }
-
-
                 }
             }
 

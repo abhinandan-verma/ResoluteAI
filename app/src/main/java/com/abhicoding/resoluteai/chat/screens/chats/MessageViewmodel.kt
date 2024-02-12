@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.abhicoding.resoluteai.DataState
 import com.abhicoding.resoluteai.chat.Message
+import com.abhicoding.resoluteai.util.formatTime
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -55,7 +56,7 @@ fun sendMessage(messageText: String, currentUser: String, nextUser: String){
         val msg = Message(
                 message = messageText,
                 senderId = currentUser,
-                time = System.currentTimeMillis().toString()
+                time = formatTime()
         )
 
         val randomKey : String? = reference.push().key

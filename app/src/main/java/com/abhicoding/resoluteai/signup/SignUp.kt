@@ -60,6 +60,7 @@ fun SignUp() {
                 }
                 Column(
                     modifier = Modifier
+                        .background(Color.Black)
                         .padding(16.dp)
                         .fillMaxWidth(1f)
                         .wrapContentHeight(),
@@ -112,9 +113,10 @@ fun SignUp() {
                     if (progress){
                         Progress()
                     }
+
+                    Spacer(modifier = Modifier.height(8.dp))
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
 
             }
 

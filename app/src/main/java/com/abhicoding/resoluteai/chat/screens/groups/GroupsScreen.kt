@@ -20,7 +20,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.twotone.Home
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -39,11 +38,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.abhicoding.resoluteai.DataState
+import com.abhicoding.resoluteai.R
 import com.google.firebase.Firebase
 import com.google.firebase.database.database
 
@@ -202,13 +204,13 @@ fun ShowLazyList(groups: MutableList<FireGroup>) {
                     Modifier
                         .background(
                             Brush.linearGradient(
-                                listOf(Color.Yellow, Color.Green, Color.Cyan)
+                                listOf(Color.White,Color.Cyan)
                             )
                         )
                         .padding(16.dp)
                 ) {
                     Image(
-                        imageVector = Icons.TwoTone.Home,
+                        imageVector = ImageVector.vectorResource(id = R.drawable.group),
                         colorFilter = ColorFilter.tint(Color.Black),
                         alignment = Alignment.TopStart,
                         contentDescription = "Group",
